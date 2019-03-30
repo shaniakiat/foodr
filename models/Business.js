@@ -30,4 +30,6 @@ const BusinessSchema = new Schema({
   }
 })
 
-module.exports = Business = mongoose.model('business', BusinessSchema)
+const Business = mongoose.model('business', BusinessSchema)
+
+export default Business

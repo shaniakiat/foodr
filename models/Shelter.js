@@ -36,4 +36,6 @@ const ShelterSchema = new Schema({
   }
 })
 
-module.exports = Shelter = mongoose.model('shelter', ShelterSchema)
+const Shelter = mongoose.model('shelter', ShelterSchema)
+
+export default Shelter
