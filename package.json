@@ -24,6 +24,8 @@
     "nodemon": "^1.18.10"
   },
   "dependencies": {
-    "express": "^4.16.4"
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.20"
   }
 }
