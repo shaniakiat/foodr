@@ -1,10 +1,12 @@
 import env from 'dotenv'
 import express from 'express'
 import mongoose from 'mongoose'
+import bodyParser from 'body-parser'
 
 env.config()
+
 const app = express()
-const port = process.env.PORT || 5000
+app.use(bodyParser.json())
 
 mongoose
   .connect(`${process.env.DB_CONNECTION_STRING}`, {
@@ -14,6 +16,5 @@ mongoose
   .then(() => console.log(`Connected to the datebase`))
   .catch(err => console.log(err))
 
-app.get('/', (req, res) => res.send('Hello World!'))
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+const port = process.env.PORT || 5000
+app.listen(port, () => console.log(`Back-end listening on port ${port}!`))
