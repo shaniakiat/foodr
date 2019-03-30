@@ -1,11 +1,11 @@
 {
   "name": "hackwcu19",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "build/server.js",
   "scripts": {
-    "lint": "eslint --fix *.js",
-    "dev": "nodemon --exec babel-node .",
-    "build": "babel --ignore \"node_modules\" . -d build"
+    "dev": "nodemon --exec \"eslint --fix *.js && babel-node server.js\"",
+    "build": "babel --ignore \"node_modules\",\"build\" * -d build",
+    "start": "node ."
   },
   "author": "hbthen3rd",
   "license": "MIT",
@@ -22,5 +22,8 @@
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-standard": "^4.0.0",
     "nodemon": "^1.18.10"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
   }
 }
