@@ -13,6 +13,7 @@ import PrivateRoute from './components/PrivateRoute'
 import { Layout } from 'antd'
 
 import SideNav from './components/SideNav'
+import Register from './components/Register'
 
 import './App.css'
 
@@ -39,7 +40,14 @@ class App extends Component {
           <Layout hasSider>
             <SideNav />
             <Layout className="custom-layout">
-              <Content style={{ margin: '24px 16px 0' }}>lorem ipsum</Content>
+              <Content style={{ margin: '24px 16px 0' }}>
+                <Route
+                  exact
+                  path="/register"
+                  component={Register}
+                  style={{ height: '100%' }}
+                />
+              </Content>
             </Layout>
           </Layout>
         </Router>
