@@ -1,9 +1,9 @@
 {
-  "name": "foodr",
+  "name": "foodr-server",
   "version": "1.0.0",
   "main": "build/server.js",
   "scripts": {
-    "dev": "nodemon --exec \"eslint --fix *.js && babel-node server.js\"",
+    "dev": "nodemon --ignore client/ --exec \"eslint --fix *.js && babel-node server.js\"",
     "build": "babel --ignore \"node_modules\",\"build\" * -d build",
     "start": "node ."
   },
