@@ -9,11 +9,15 @@ import { setCurrentUser, unsetCurrentUser } from './actions/userActions'
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import PrivateRoute from './components/PrivateRoute'
+import PrivateRouteBusiness from './components/PrivateRouteBusiness'
+import PrivateRouteShelter from './components/PrivateRouteShelter'
 
 import { Layout } from 'antd'
 
 import SideNav from './components/SideNav'
 import Register from './components/Register'
+import Login from './components/Login'
+import Dashboard from './components/Dashboard'
 
 import './App.css'
 
@@ -47,6 +51,20 @@ class App extends Component {
                   component={Register}
                   style={{ height: '100%' }}
                 />
+                <Route
+                  exact
+                  path="/login"
+                  component={Login}
+                  style={{ height: '100%' }}
+                />
+                <Switch>
+                  <PrivateRoute
+                    exact
+                    path="/dashboard"
+                    component={Dashboard}
+                    style={{ height: '100%' }}
+                  />
+                </Switch>
               </Content>
             </Layout>
           </Layout>

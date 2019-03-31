@@ -1,8 +1,9 @@
+import { SET_CURRENT_USER } from './types'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
-
 import setAuthToken from '../utils/setAuthToken'
-import { SET_CURRENT_USER } from './types'
+
+import { notification } from 'antd'
 
 // Log In
 export const loginUser = (User, history) => dispatch => {
@@ -19,31 +20,28 @@ export const loginUser = (User, history) => dispatch => {
       const decoded = jwt_decode(token)
       dispatch(setCurrentUser(decoded))
 
-      // notification['success']({
-      //   message: 'Hi there, ' + decoded.name + '.',
-      //   description: 'Welcome to Artsee.'
-      // })
-      // dispatch(enqueueSnackbar('logged in'))
+      notification['success']({
+        message: 'Welcome, ' + decoded.name + '.',
+        description: "You're now logged in."
+      })
 
       history.replace('/dashboard')
     })
     .catch(err => {
-      // dispatch(enqueueSnackbar(err))
-      // dispatch({
-      //   type: GET_ERRORS,
-      //   payload: err.response.data
-      // })
+      notification['error']({
+        message: 'Error!',
+        description: 'Email and Password combination do not match our records.'
+      })
     })
 }
 
 // Log Out
 export const logoutUser = history => dispatch => {
   dispatch(unsetCurrentUser())
-  // notification['success']({
-  //   message: 'Goodbye.',
-  //   description: 'We miss you already.'
-  // })
-  // dispatch(enqueueSnackbar('logged out'))
+  notification['success']({
+    message: 'Goodbye.',
+    description: 'We miss you already.'
+  })
   history.replace('/')
 }
 

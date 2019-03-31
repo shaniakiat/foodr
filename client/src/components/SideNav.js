@@ -31,41 +31,45 @@ class SideNav extends Component {
           mode="inline"
           defaultSelectedKeys={[this.props.location.pathname]}
           selectedKeys={[this.props.location.pathname]}
+          style={{ height: '100%' }}
         >
           {/* Logo goes here */}
-          <Menu.Item key="/" style={{ marginTop: '64px' }}>
+          <Menu.Item key="/" style={{ marginTop: '4rem' }}>
             <Link to="/">
               <Icon type="home" theme="outlined" className="notchFixLeft" />
               <span className="nav-text">Home</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="/register">
-            <Link to="/register">
-              <Icon type="idcard" theme="outlined" className="notchFixLeft" />
-              <span className="nav-text">Register</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="/dashboard">
-            <Link to="/dashboard">
-              <Icon type="user" theme="outlined" className="notchFixLeft" />
-              <span className="nav-text">
-                {/* {this.props.auth.user.name} */}
-                Dashboard
-              </span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="/login" className="notchFixBottom">
-            <Link to="/login">
-              <Icon type="login" theme="outlined" className="notchFixLeft" />
-              <span className="nav-text">Log In</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="/logout" className="notchFixBottom">
-            <a onClick={this.onLogOutClick}>
-              <Icon type="logout" theme="outlined" className="notchFixLeft" />
-              <span className="nav-text">Log Out</span>
-            </a>
-          </Menu.Item>
+          {this.props.user.isAuthenticated ? (
+            <Menu.Item key="/dashboard">
+              <Link to="/dashboard">
+                <Icon type="user" theme="outlined" className="notchFixLeft" />
+                <span className="nav-text">{this.props.user.user.name}</span>
+              </Link>
+            </Menu.Item>
+          ) : (
+            <Menu.Item key="/register">
+              <Link to="/register">
+                <Icon type="idcard" theme="outlined" className="notchFixLeft" />
+                <span className="nav-text">Register</span>
+              </Link>
+            </Menu.Item>
+          )}
+          {this.props.user.isAuthenticated ? (
+            <Menu.Item key="/logout">
+              <a href="#" onClick={this.onLogOutClick}>
+                <Icon type="logout" theme="outlined" className="notchFixLeft" />
+                <span className="nav-text">Log Out</span>
+              </a>
+            </Menu.Item>
+          ) : (
+            <Menu.Item key="/login">
+              <Link to="/login">
+                <Icon type="login" theme="outlined" className="notchFixLeft" />
+                <span className="nav-text">Log In</span>
+              </Link>
+            </Menu.Item>
+          )}
         </Menu>
       </Sider>
     )
@@ -74,11 +78,11 @@ class SideNav extends Component {
 
 SideNav.propTypes = {
   logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  user: state.user
 })
 
 export default withRouter(
