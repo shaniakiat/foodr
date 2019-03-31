@@ -3,45 +3,48 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
 
-import Business from '../models/Business'
+import User from '../models/User'
 
-import validateBusinessRegister from '../validation/businessRegister'
-import validateBusinessLogin from '../validation/businessLogin'
+import validateRegister from '../validation/register'
+import validateLogin from '../validation/login'
 
 const router = express.Router()
 
-// @route   POST api/business/register
-// @desc    Register a business
+// @route   POST api/user/register
+// @desc    Register a user
 // @access  Public
 router.post('/register', (req, res) => {
-  const { errors, isValid } = validateBusinessRegister(req.body)
+  const { errors, isValid } = validateRegister(req.body)
 
   if (!isValid) {
     return res.status(400).json(errors)
   }
 
-  Business.findOne({ email: req.body.email }).then(business => {
-    if (business) {
+  User.findOne({ email: req.body.email }).then(user => {
+    if (user) {
       errors.email = 'Email is already taken.'
       return res.status(400).json(errors)
     } else {
-      const newBusiness = new Business({
+      const newUser = new User({
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
         address: req.body.address,
         zipcode: req.body.zipcode,
-        phone: req.body.phone
+        phone: req.body.phone,
+        isShelter: req.body.isShelter,
+        driverPhoneNumbers: req.body.driverPhoneNumbers,
+        capacity: req.body.capacity
       })
 
       bcrypt.genSalt(10, (err, salt) => {
         if (err) throw err
-        bcrypt.hash(newBusiness.password, salt, (err, hash) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) throw err
-          newBusiness.password = hash
-          newBusiness
+          newUser.password = hash
+          newUser
             .save()
-            .then(business => res.json(business))
+            .then(user => res.json(user))
             .catch(err => console.log(err))
         })
       })
@@ -49,30 +52,33 @@ router.post('/register', (req, res) => {
   })
 })
 
-// @route   POST api/business/login
-// @desc    Log business in
+// @route   POST api/user/login
+// @desc    Log a user in
 // @access  Public
 router.post('/login', (req, res) => {
-  const { errors, isValid } = validateBusinessLogin(req.body)
+  const { errors, isValid } = validateLogin(req.body)
 
   if (!isValid) {
     return res.status(400).json(errors)
   }
 
-  Business.findOne({ email: req.body.email }).then(business => {
-    if (!business) {
-      errors.email = 'Business not found.'
+  User.findOne({ email: req.body.email }).then(user => {
+    if (!user) {
+      errors.email = 'User not found.'
       return res.status(404).json(errors)
     } else {
-      bcrypt.compare(req.body.password, business.password).then(isMatch => {
+      bcrypt.compare(req.body.password, user.password).then(isMatch => {
         if (isMatch) {
           const payload = {
-            id: business.id,
-            name: business.name,
-            email: business.email,
-            address: business.address,
-            zipcode: business.zipcode,
-            phone: business.phone
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            address: user.address,
+            zipcode: user.zipcode,
+            phone: user.phone,
+            isShelter: user.isShelter,
+            driverPhoneNumbers: user.driverPhoneNumbers,
+            capacity: user.capacity
           }
 
           jwt.sign(
@@ -96,11 +102,11 @@ router.post('/login', (req, res) => {
   })
 })
 
-// @route   GET api/business/current
-// @desc    Return the current business
+// @route   GET api/user/
+// @desc    Return the current user
 // @access  Private
 router.get(
-  '/current',
+  '/',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     return res.json({
@@ -109,7 +115,10 @@ router.get(
       email: req.user.email,
       address: req.user.address,
       zipcode: req.user.zipcode,
-      phone: req.user.phone
+      phone: req.user.phone,
+      isShelter: req.user.isShelter,
+      driverPhoneNumbers: req.user.driverPhoneNumbers,
+      capacity: req.user.capacity
     })
   }
 )

@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 
-const ShelterSchema = new Schema({
+const UserSchema = new Schema({
   name: {
     type: String,
     required: true
@@ -28,6 +28,10 @@ const ShelterSchema = new Schema({
     type: String,
     required: true
   },
+  isShelter: {
+    type: Boolean,
+    required: true
+  },
   driverPhoneNumbers: {
     type: String
   },
@@ -36,6 +40,6 @@ const ShelterSchema = new Schema({
   }
 })
 
-const Shelter = mongoose.model('shelter', ShelterSchema)
+const User = mongoose.model('user', UserSchema)
 
-export default Shelter
+export default User

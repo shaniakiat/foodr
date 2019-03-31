@@ -20,7 +20,7 @@ const FoodSchema = new Schema({
   },
   business: {
     type: Schema.Types.ObjectId,
-    ref: 'business',
+    ref: 'user',
     required: true
   }
 })

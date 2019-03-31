@@ -1,6 +1,6 @@
 import env from 'dotenv'
 import passportJWT from 'passport-jwt'
-import Business from './models/Business'
+import User from './models/User'
 
 env.config()
 
@@ -14,10 +14,10 @@ opts.secretOrKey = process.env.SECRET
 export default passport => {
   passport.use(
     new JwtStrategy(opts, (jwtPayload, done) => {
-      Business.findById(jwtPayload.id)
-        .then(business => {
-          if (business) {
-            return done(null, business)
+      User.findById(jwtPayload.id)
+        .then(user => {
+          if (user) {
+            return done(null, user)
           }
           return done(null, false)
         })

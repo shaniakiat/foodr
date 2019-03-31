@@ -1,7 +1,7 @@
 import validator from 'validator'
 import isEmpty from './is-empty'
 
-const validateBusinessLogin = data => {
+const validateLogin = data => {
   let errors = {}
 
   data.email = !isEmpty(data.email) ? data.email : ''
@@ -25,4 +25,4 @@ const validateBusinessLogin = data => {
   }
 }
 
-export default validateBusinessLogin
+export default validateLogin

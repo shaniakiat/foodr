@@ -1,7 +1,7 @@
 import validator from 'validator'
 import isEmpty from './is-empty'
 
-const validateBusinessRegister = data => {
+const validateRegister = data => {
   let errors = {}
 
   data.name = !isEmpty(data.name) ? data.name : ''
@@ -11,6 +11,7 @@ const validateBusinessRegister = data => {
   data.address = !isEmpty(data.address) ? data.address : ''
   data.zipcode = !isEmpty(data.zipcode) ? data.zipcode : ''
   data.phone = !isEmpty(data.phone) ? data.phone : ''
+  data.isShelter = !isEmpty(data.isShelter) ? data.isShelter : ''
 
   if (!validator.isLength(data.name, { min: 1, max: 30 })) {
     errors.name = 'Name must be between 1 and 30 characters.'
@@ -64,10 +65,14 @@ const validateBusinessRegister = data => {
     errors.phone = 'Phone number is required.'
   }
 
+  if (validator.isEmpty(data.isShelter)) {
+    errors.isShelter = 'Please state whether this is a Business or Shelter.'
+  }
+
   return {
     errors,
     isValid: isEmpty(errors)
   }
 }
 
-export default validateBusinessRegister
+export default validateRegister

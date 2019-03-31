@@ -4,7 +4,7 @@ import bodyParser from 'body-parser'
 import passport from 'passport'
 import ppconf from './ppconf'
 
-import business from './api/business'
+import user from './api/user'
 
 mongoose
   .connect(`${process.env.DB_CONNECTION_STRING}`, {
@@ -22,7 +22,7 @@ app.use(bodyParser.json())
 app.use(passport.initialize())
 ppconf(passport)
 
-app.use('/api/business', business)
+app.use('/api/user', user)
 
 const port = process.env.PORT || 5000
 app.listen(port, () => console.log(`Back-end listening on port ${port}!`))
