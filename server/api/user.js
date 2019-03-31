@@ -123,4 +123,73 @@ router.get(
   }
 )
 
+// @route   GET api/user/
+// @desc    Return the current user
+// @access  Private
+router.get(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    return res.json({
+      id: req.user.id,
+      name: req.user.name,
+      email: req.user.email,
+      address: req.user.address,
+      zipcode: req.user.zipcode,
+      phone: req.user.phone,
+      isShelter: req.user.isShelter,
+      driverPhoneNumbers: req.user.driverPhoneNumbers,
+      capacity: req.user.capacity
+    })
+  }
+)
+
+// @route   GET api/user/business
+// @desc    Return the current user
+// @access  Public
+router.get('/business', (req, res) => {
+  User.find({ isShelter: false })
+    .then(businesses => {
+      if (!businesses) {
+        errors.business = 'There are no Business.'
+        return res.status(404).json(errors)
+      } else {
+        return res.json(businesses)
+      }
+    })
+    .catch(err => res.status(500).json(err))
+})
+
+// @route   GET api/user/business
+// @desc    Return the current user
+// @access  Public
+router.get('/business', (req, res) => {
+  User.find({ isShelter: false })
+    .then(businesses => {
+      if (!businesses) {
+        errors.business = 'There are no Business.'
+        return res.status(404).json(errors)
+      } else {
+        return res.json(businesses)
+      }
+    })
+    .catch(err => res.status(500).json(err))
+})
+
+// @route   GET api/user/business
+// @desc    Return the current user
+// @access  Public
+router.get('/business/:zipcode', (req, res) => {
+  User.find({ isShelter: false, zipcode: req.params.zipcode })
+    .then(businesses => {
+      if (!businesses) {
+        errors.business = 'There are no Business.'
+        return res.status(404).json(errors)
+      } else {
+        return res.json(businesses)
+      }
+    })
+    .catch(err => res.status(500).json(err))
+})
+
 export default router

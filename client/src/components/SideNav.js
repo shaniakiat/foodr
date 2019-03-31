@@ -55,6 +55,18 @@ class SideNav extends Component {
               </Link>
             </Menu.Item>
           )}
+          {this.props.user.isAuthenticated && this.props.user.user.isShelter && (
+            <Menu.Item key="/business">
+              <Link to="/business">
+                <Icon
+                  type="environment"
+                  theme="outlined"
+                  className="notchFixLeft"
+                />
+                <span className="nav-text">Businesses</span>
+              </Link>
+            </Menu.Item>
+          )}
           {this.props.user.isAuthenticated ? (
             <Menu.Item key="/logout">
               <a href="#" onClick={this.onLogOutClick}>

@@ -8,7 +8,7 @@ const FoodSchema = new Schema({
     required: true
   },
   expDate: {
-    type: Date,
+    type: String,
     required: true
   },
   notes: {

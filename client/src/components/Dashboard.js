@@ -12,7 +12,7 @@ class Dashboard extends Component {
     return (
       <>
         <Title>
-          {this.props.user.user.isShelter ? 'Sehlter' : 'Business'}:&nbsp;
+          {this.props.user.user.isShelter ? 'Shelter' : 'Business'}:&nbsp;
           {this.props.user.user.name}
         </Title>
         <List bordered style={{ backgroundColor: '#fff' }}>

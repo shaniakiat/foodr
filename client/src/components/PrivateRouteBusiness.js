@@ -7,7 +7,7 @@ const PrivateRouteBusiness = ({ component: Component, user, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      user.isAuthenticated === true && user.isShelter === false ? (
+      user.isAuthenticated === true && user.user.isShelter === false ? (
         <Component {...props} />
       ) : (
         <Redirect to="/login" />
